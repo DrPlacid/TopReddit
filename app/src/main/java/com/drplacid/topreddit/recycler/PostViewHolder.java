@@ -1,16 +1,15 @@
-package com.drplacid.topreddit;
+package com.drplacid.topreddit.recycler;
 
 import android.graphics.Bitmap;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.drplacid.topreddit.util.ImageLoader;
+import com.drplacid.topreddit.R;
 import com.drplacid.topreddit.model.PostItem;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
@@ -24,6 +23,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
+
         header = itemView.findViewById(R.id.textHeader);
         comments = itemView.findViewById(R.id.comments);
         title = itemView.findViewById(R.id.textTitle);
@@ -31,32 +31,25 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
         IPostListener listener = (IPostListener) itemView.getContext();
 
-        thumbnail.setOnClickListener(view -> {
-            listener.loadImage(item.getFullSizeImageUrl());
-        });
-
+        thumbnail.setOnClickListener(view -> listener.loadFullSizeImage(item.getFullSizeImageUrl()));
     }
 
     public void setData(PostItem item) {
         this.item = item;
+
         String headerText = "Posted by u/" + item.getName() + " " + item.getDate() + " hours ago";
         String titleText = item.getTitle();
         String commentsText = item.getCommentsCount() + " comments";
         String thumbnailURL = item.getThumbnailUrl();
 
-
         header.setText(headerText);
         comments.setText(commentsText);
         title.setText(titleText);
 
-        Log.i("CURRENTTIME", "HolderCreated" + SystemClock.currentThreadTimeMillis());
-
         if (!thumbnailURL.equals("null")) {
-            ImageLoader.getInstance().loadToPost(thumbnailURL, this);
+            ImageLoader.getInstance().loadThumbnail(thumbnailURL, this);
         }
-        Log.i("CURRENTTIME", "HolderCreated + IMG" + SystemClock.currentThreadTimeMillis());
     }
-
 
     public void setThumbnail(Bitmap img) {
         thumbnail.setImageBitmap(img);

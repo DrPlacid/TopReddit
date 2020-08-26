@@ -1,18 +1,14 @@
 package com.drplacid.topreddit;
 
-import android.os.SystemClock;
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.drplacid.topreddit.model.Response;
+import com.drplacid.topreddit.model.APIResponse;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -22,7 +18,7 @@ import okhttp3.Request;
 public class RedditRepository {
 
     private OkHttpClient client;
-    public MutableLiveData<Response> responseMutableLiveData;
+    public MutableLiveData<APIResponse> responseMutableLiveData;
 
     public RedditRepository() {
         client = new OkHttpClient();
@@ -48,7 +44,7 @@ public class RedditRepository {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
+
             }
 
             @Override
@@ -56,7 +52,7 @@ public class RedditRepository {
                 if(response.isSuccessful()) {
                     if (response.body() != null) {
                         final String mResponce = response.body().string();
-                        Response page = new Gson().fromJson(mResponce, Response.class);
+                        APIResponse page = new Gson().fromJson(mResponce, APIResponse.class);
                         responseMutableLiveData.postValue(page);
                     }
                 }
@@ -65,7 +61,7 @@ public class RedditRepository {
 
     }
 
-    public MutableLiveData<Response> getResponseMutableLiveData() {
+    public MutableLiveData<APIResponse> getResponseMutableLiveData() {
         return responseMutableLiveData;
     }
 }

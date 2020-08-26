@@ -6,7 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.drplacid.topreddit.model.Response;
+import com.drplacid.topreddit.model.APIResponse;
+import com.drplacid.topreddit.util.ImageLoader;
 
 import java.util.Objects;
 import java.util.Stack;
@@ -17,7 +18,7 @@ public class RedditViewModel extends AndroidViewModel {
     private int limit;
 
     private RedditRepository repository;
-    private MutableLiveData<Response> postItemsLiveData;
+    private MutableLiveData<APIResponse> postItemsLiveData;
 
     private Stack<String> breakpoints = new Stack<>();
     private String before = "null";
@@ -40,6 +41,7 @@ public class RedditViewModel extends AndroidViewModel {
             breakpoints.push(after);
         }
         repository.get(limit, "null", after);
+        ImageLoader.getInstance().clearCache();
     }
 
     public void goToPreviousPage() {
@@ -49,9 +51,10 @@ public class RedditViewModel extends AndroidViewModel {
             before = "null";
         }
         repository.get(limit, before, "null");
+        ImageLoader.getInstance().clearCache();
     }
 
-    public MutableLiveData<Response> getPostItemsLiveData() {
+    public MutableLiveData<APIResponse> getPostItemsLiveData() {
         return postItemsLiveData;
     }
 }

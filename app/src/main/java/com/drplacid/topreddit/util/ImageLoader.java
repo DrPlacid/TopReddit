@@ -1,13 +1,13 @@
-package com.drplacid.topreddit;
+package com.drplacid.topreddit.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.LruCache;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+
+import com.drplacid.topreddit.recycler.PostViewHolder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,11 +15,10 @@ import java.util.concurrent.ExecutionException;
 
 public class ImageLoader {
 
-    private LruCache<String, Bitmap> memoryCache;
-
     final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
     final int cacheSize = maxMemory / 8;
 
+    private static LruCache<String, Bitmap> memoryCache;
     private static ImageLoader instance;
 
     public static ImageLoader getInstance() {
@@ -38,7 +37,7 @@ public class ImageLoader {
         };
     }
 
-    public void loadToPost(@NonNull String url, PostViewHolder holder) {
+    public void loadThumbnail(@NonNull String url, PostViewHolder holder) {
         if (memoryCache.get(url) == null) {
             new LoadToPostAsyncTask(holder, memoryCache).execute(url);
         } else {
@@ -54,6 +53,10 @@ public class ImageLoader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void clearCache(){
+        memoryCache.evictAll();
     }
 
     private static class LoadToPostAsyncTask extends AsyncTask<String, Void, Bitmap> {

@@ -1,4 +1,4 @@
-package com.drplacid.topreddit;
+package com.drplacid.topreddit.util;
 
 import android.view.View;
 import android.view.animation.Animation;

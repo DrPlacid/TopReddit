@@ -2,7 +2,7 @@ package com.drplacid.topreddit.model;
 
 import java.util.List;
 
-public class Response {
+public class APIResponse {
 
     private Data data;
 

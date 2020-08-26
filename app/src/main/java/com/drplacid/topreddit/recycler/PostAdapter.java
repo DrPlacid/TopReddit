@@ -1,4 +1,4 @@
-package com.drplacid.topreddit;
+package com.drplacid.topreddit.recycler;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.drplacid.topreddit.R;
 import com.drplacid.topreddit.model.PostItem;
 
 public class PostAdapter extends ListAdapter<PostItem, PostViewHolder> {
     
-    protected PostAdapter() {
+    public PostAdapter() {
         super(DIFF_CALLBACK);
     }
 

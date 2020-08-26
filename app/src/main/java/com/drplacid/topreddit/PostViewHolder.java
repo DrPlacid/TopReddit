@@ -1,8 +1,9 @@
 package com.drplacid.topreddit;
 
 import android.graphics.Bitmap;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,44 +15,51 @@ import com.drplacid.topreddit.model.PostItem;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
-    private View gap;
-
-    private TextView author;
-    private TextView postedAt;
+    private TextView header;
     private TextView comments;
     private TextView title;
     private ImageView thumbnail;
 
+    private PostItem item;
+
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
-        author = itemView.findViewById(R.id.textUsername);
-        postedAt = itemView.findViewById(R.id.textDate);
-        comments = itemView.findViewById(R.id.commentsNumber);
+        header = itemView.findViewById(R.id.textHeader);
+        comments = itemView.findViewById(R.id.comments);
         title = itemView.findViewById(R.id.textTitle);
         thumbnail = itemView.findViewById(R.id.image);
-        gap = itemView.findViewById(R.id.gapView);
+
+        IPostListener listener = (IPostListener) itemView.getContext();
+
+        thumbnail.setOnClickListener(view -> {
+            listener.loadImage(item.getFullSizeImageUrl());
+        });
+
     }
 
     public void setData(PostItem item) {
-        String name = item.getName();
-        String date = String.valueOf(item.getDate());
-        String thumbnailURL = item.getImageUrl();
-        String commentsCount = String.valueOf(item.getCommentsCount());
+        this.item = item;
+        String headerText = "Posted by u/" + item.getName() + " " + item.getDate() + " hours ago";
         String titleText = item.getTitle();
+        String commentsText = item.getCommentsCount() + " comments";
+        String thumbnailURL = item.getThumbnailUrl();
 
-        author.setText(name);
-        postedAt.setText(date);
-        comments.setText(commentsCount);
+
+        header.setText(headerText);
+        comments.setText(commentsText);
         title.setText(titleText);
 
-        if (!thumbnailURL.isEmpty()) {
-            Bitmap img = ImageLoader.load(thumbnailURL);
-            thumbnail.setImageBitmap(img);
-            if (img == null) {
-                gap.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT));
-            }
-        }
+        Log.i("CURRENTTIME", "HolderCreated" + SystemClock.currentThreadTimeMillis());
 
+        if (!thumbnailURL.equals("null")) {
+            ImageLoader.getInstance().loadToPost(thumbnailURL, this);
+        }
+        Log.i("CURRENTTIME", "HolderCreated + IMG" + SystemClock.currentThreadTimeMillis());
+    }
+
+
+    public void setThumbnail(Bitmap img) {
+        thumbnail.setImageBitmap(img);
     }
 
 

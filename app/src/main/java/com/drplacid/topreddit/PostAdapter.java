@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.drplacid.topreddit.model.PostItem;
 
 public class PostAdapter extends ListAdapter<PostItem, PostViewHolder> {
-
-
+    
     protected PostAdapter() {
         super(DIFF_CALLBACK);
     }

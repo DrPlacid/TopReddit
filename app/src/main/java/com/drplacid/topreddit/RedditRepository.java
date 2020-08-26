@@ -1,5 +1,8 @@
 package com.drplacid.topreddit;
 
+import android.os.SystemClock;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.drplacid.topreddit.model.Response;
@@ -9,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -39,6 +43,7 @@ public class RedditRepository {
         Request request = new Request.Builder()
                 .url(URL)
                 .build();
+
 
         client.newCall(request).enqueue(new Callback() {
             @Override

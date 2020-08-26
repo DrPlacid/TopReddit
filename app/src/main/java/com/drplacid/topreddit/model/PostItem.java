@@ -30,12 +30,16 @@ public class PostItem {
         return String.valueOf(hours);
     }
 
-    public String getImageUrl() {
+    public String getThumbnailUrl() {
         return data.thumbnailURL;
     }
 
-    public int getCommentsCount() {
-        return data.comments;
+    public String getFullSizeImageUrl() {
+        return data.fullSizeImageURL;
+    }
+
+    public String getCommentsCount() {
+        return String.valueOf(data.comments);
     }
 
 
@@ -52,6 +56,9 @@ public class PostItem {
 
         @SerializedName("thumbnail")
         private String thumbnailURL;
+
+        @SerializedName("url")
+        private String fullSizeImageURL;
 
         @SerializedName("num_comments")
         private int comments;

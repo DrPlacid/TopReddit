@@ -26,7 +26,7 @@ public class RedditViewModel extends AndroidViewModel {
 
     public RedditViewModel(@NonNull Application application) {
         super(application);
-        repository = new RedditRepository();
+        repository = new RedditRepository(application.getBaseContext());
     }
 
     public void init(int limit) {

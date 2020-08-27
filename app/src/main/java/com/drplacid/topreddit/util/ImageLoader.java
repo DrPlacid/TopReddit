@@ -2,6 +2,7 @@ package com.drplacid.topreddit.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.util.LruCache;
 
@@ -46,9 +47,9 @@ public class ImageLoader {
         }
     }
 
-    public Bitmap loadFullSize(String url) {
+    public Bitmap loadFullSize(String url, int maxWidth) {
         try {
-            return new LoadFullSizeAsyncTask().execute(url).get();
+            return new LoadFullSizeAsyncTask(maxWidth).execute(url).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -74,7 +75,7 @@ public class ImageLoader {
                 try {
                     URL url = new URL(strings[0]);
                     Bitmap b = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    Bitmap resized = Bitmap.createScaledBitmap(b, 120, 120, false);
+                    Bitmap resized = Bitmap.createScaledBitmap(b, 150, 150, false);
                     memoryCache.put(strings[0], resized);
                     return resized;
                 } catch (IOException e) {
@@ -91,12 +92,22 @@ public class ImageLoader {
     }
 
     private static class LoadFullSizeAsyncTask extends AsyncTask<String, Void, Bitmap> {
+        private int maxWidth;
+
+        public LoadFullSizeAsyncTask(int maxWidth) {
+            this.maxWidth = maxWidth;
+        }
 
         @Override
         protected Bitmap doInBackground(String... strings) {
             try {
                 URL url = new URL(strings[0]);
-                return BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeStream(url.openConnection().getInputStream(), new Rect(),  options);
+                options.inSampleSize = (int) options.outWidth/ maxWidth;
+                options.inJustDecodeBounds = false;
+                return BitmapFactory.decodeStream(url.openConnection().getInputStream(), null,  options);
             } catch (IOException e) {
                 e.printStackTrace();
             }

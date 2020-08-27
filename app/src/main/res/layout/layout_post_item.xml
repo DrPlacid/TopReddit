@@ -21,8 +21,8 @@
             android:id="@+id/textHeader"
             android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:gravity="bottom"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:gravity="bottom" />
 
         <View
             android:layout_width="match_parent"
@@ -63,9 +63,9 @@
             android:id="@+id/comments"
             android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
             android:gravity="top"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 

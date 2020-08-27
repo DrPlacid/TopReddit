@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class PostItem {
 
-    private Data data;
+    private PostData data;
 
     public String getId() {
         return data.id;
@@ -43,7 +43,7 @@ public class PostItem {
     }
 
 
-    static class Data {
+    static class PostData {
 
         private String id;
 

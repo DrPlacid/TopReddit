@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Items shown" />
+            android:text="@string/items_shown"
+            android:textSize="15sp" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -34,7 +35,6 @@
                 android:id="@+id/show10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="10" />
 
             <RadioButton

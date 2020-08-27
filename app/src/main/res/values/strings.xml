@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TopReddit</string>
+    <string name="items_shown">Posts shown</string>
 </resources>

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class APIResponse {
 
-    private Data data;
+    private ResponseData data;
 
-    static class Data {
+    static class ResponseData {
         List<PostItem> children;
 
         private String before;
@@ -16,10 +16,6 @@ public class APIResponse {
 
     public List<PostItem> getPosts() {
         return data.children;
-    }
-
-    public String getBefore() {
-        return data.before;
     }
 
     public String getAfter() {

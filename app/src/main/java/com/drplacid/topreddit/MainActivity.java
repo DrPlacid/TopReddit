@@ -81,7 +81,11 @@ public class MainActivity extends AppCompatActivity implements IPostListener {
         close.setOnClickListener(view -> closeImageView());
 
         ImageButton save = findViewById(R.id.saveImage);
-        save.setOnClickListener(view -> saveImage());
+        save.setOnClickListener(view -> {
+            saveImage();
+            Snackbar.make(root, "Image saved", Snackbar.LENGTH_SHORT)
+                    .show();
+        });
     }
 
     private void initBottomPanel() {

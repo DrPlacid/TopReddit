@@ -105,7 +105,7 @@ public class ImageLoader {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeStream(url.openConnection().getInputStream(), new Rect(),  options);
-                options.inSampleSize = (int) options.outWidth/ maxWidth;
+                options.inSampleSize = options.outWidth / maxWidth;
                 options.inJustDecodeBounds = false;
                 return BitmapFactory.decodeStream(url.openConnection().getInputStream(), null,  options);
             } catch (IOException e) {
